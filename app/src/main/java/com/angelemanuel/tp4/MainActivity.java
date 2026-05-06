@@ -65,7 +65,25 @@ public class MainActivity extends AppCompatActivity {
                     R.id.nav_cargar, R.id.nav_listar)
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-            NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+            bottomNavigationView.setOnItemSelectedListener(item -> {
+                if (item.getItemId() == R.id.nav_salir) {
+                    mostrarDialogoSalir();
+                    return false;
+                }
+                return NavigationUI.onNavDestinationSelected(item, navController);
+            });
+
+            navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+                Menu menu = bottomNavigationView.getMenu();
+                for (int i = 0; i < menu.size(); i++) {
+                    MenuItem menuItem = menu.getItem(i);
+                    if (menuItem.getItemId() == destination.getId()) {
+                        menuItem.setChecked(true);
+                        break;
+                    }
+                }
+            });
         }
     }
 
