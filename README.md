@@ -2,7 +2,7 @@
 
 ## Video de Demostración
 
-<!-- Inserte aquí el video arrastrándolo directamente al editor de GitHub o usando assets -->
+https://github.com/user-attachments/assets/c4330f1e-cb90-4a20-9334-220140fbf264
 
 ## Flujo mostrado en el video
 
