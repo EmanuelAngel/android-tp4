@@ -32,17 +32,24 @@ public class CargarViewModel extends ViewModel {
 
     public void guardarProducto(String codigoStr, String descripcion, String precioStr) {
         boolean error = false;
+        int codigo = 0;
+        double precio = 0;
 
         if (codigoStr.isEmpty()) {
             errorCodigo.setValue("Campo vacío");
             error = true;
         } else {
-            int codigo = Integer.parseInt(codigoStr);
-            if (existeCodigo(codigo)) {
-                errorCodigo.setValue("Código repetido");
+            try {
+                codigo = Integer.parseInt(codigoStr);
+                if (existeCodigo(codigo)) {
+                    errorCodigo.setValue("Código repetido");
+                    error = true;
+                } else {
+                    errorCodigo.setValue(null);
+                }
+            } catch (NumberFormatException e) {
+                errorCodigo.setValue("Código inválido");
                 error = true;
-            } else {
-                errorCodigo.setValue(null);
             }
         }
 
@@ -57,12 +64,16 @@ public class CargarViewModel extends ViewModel {
             errorPrecio.setValue("Campo vacío");
             error = true;
         } else {
-            errorPrecio.setValue(null);
+            try {
+                precio = Double.parseDouble(precioStr);
+                errorPrecio.setValue(null);
+            } catch (NumberFormatException e) {
+                errorPrecio.setValue("Precio inválido");
+                error = true;
+            }
         }
 
         if (!error) {
-            int codigo = Integer.parseInt(codigoStr);
-            double precio = Double.parseDouble(precioStr);
             Producto nuevoProducto = new Producto(codigo, descripcion, precio);
             MainActivity.listaProductos.add(nuevoProducto);
             exitoGuardado.setValue(true);
